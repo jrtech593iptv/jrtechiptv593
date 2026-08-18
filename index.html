@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>JR TECH - Entretenimiento Digital</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="video-superior">
+        <video autoplay muted loop playsinline>
+            <source src="anuncios/video.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="container">
+        <header class="section-center" style="margin-top: 20px;">
+            <img src="galeria/jrtech.png" alt="Logo oficial de JR TECH Entretenimiento Digital" width="200"> 
+            <h1 class="titulo-principal">JR TECH - Plataforma Digital</h1>
+            <p style="font-size: 18px; color: #64748b;"><i>Todo el entretenimiento en un solo lugar.</i></p>
+        </header>
+
+        <h2 id="mensaje" class="section-center" style="color: #2563eb; font-weight: 500;"></h2>
+
+        <nav class="nav-links">
+            <ul>
+                <li><a href="#"><i class="fa-solid fa-house"></i> Inicio</a></li>
+                <li><a href="#servicios"><i class="fa-solid fa-tv"></i> Servicios</a></li>
+                <li><a href="#game-section"><i class="fa-solid fa-gamepad"></i> Mini Juego</a></li>
+                <li><a href="#contacto"><i class="fa-solid fa-envelope"></i> Contacto</a></li>
+            </ul>
+        </nav>
+
+        <hr>
+
+        <div class="section-center reloj-contenedor">
+            <p style="font-weight: bold; margin: 0 0 5px 0; color: #0369a1; font-size: 14px; letter-spacing: 1px;">HORA LOCAL</p>
+            <h2 id="reloj" style="margin: 0; color: #0369a1; font-size: 32px;">00:00:00</h2>
+        </div>
+
+        <section style="margin-top: 30px;">
+            <h2>Bienvenidos a la Innovación</h2>
+            <p style="font-size: 18px; line-height: 1.6;">Somos una plataforma enfocada en <strong>innovación tecnológica</strong> y desarrollo digital.<br>Ofrecemos estabilidad, rapidez y soporte técnico garantizado.</p>
+            <p style="font-size: 16px; line-height: 1.6;">Disfruta de tus películas, series y eventos deportivos favoritos desde cualquier dispositivo compatible. Nuestro compromiso es brindarte un servicio de <em>excelente calidad visual</em> sin interrupciones molestas.</p>
+            
+            <div class="btn-group">
+                <button class="btn" onclick="mostrarInformacion()">Mostrar Info Plan</button>
+                <button class="btn" onclick="actualizarTitulo()">Actualizar Nombre</button>
+                <button class="btn" onclick="cambiarColor()">Cambiar Tema Oscuro</button>
+            </div>
+        </section>
+
+        <hr>
+
+        <section id="servicios">
+            <h2>Información General de Servicios</h2>
+            <div class="grid-listas">
+                <div>
+                    <h3>Dispositivos Compatibles</h3>
+                    <ul class="lista-estilo">
+                        <li>Smart TVs (Samsung, LG, Android TV)</li>
+                        <li>Dispositivos TV Box y Amazon Firestick</li>
+                        <li>Teléfonos Celulares y Tablets (Android / iOS)</li>
+                        <li>Computadoras y Laptops (Web player)</li>
+                        <li>Consolas de Videojuegos (PlayStation / Xbox)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Pasos para activar tu servicio</h3>
+                    <ol class="lista-estilo">
+                        <li>Selecciona tu plan preferido en el cotizador.</li>
+                        <li>Completa el formulario de contacto con tus datos.</li>
+                        <li>Realiza el pago mediante transferencia o depósito.</li>
+                        <li>Envía el comprobante a nuestro WhatsApp de soporte.</li>
+                        <li>Recibe tus credenciales y ¡empieza a disfrutar!</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>Catálogo de Planes y Precios</h2>
+            <table class="tabla-servicios">
+                <thead>
+                    <tr>
+                        <th>Servicio / Plataforma</th>
+                        <th>Pantallas/Accesos</th>
+                        <th>Vigencia</th>
+                        <th>Precio Estimado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tele Latino IPTV</td>
+                        <td>3 Dispositivos</td>
+                        <td>1 Mes</td>
+                        <td>$4.00</td>
+                    </tr>
+                    <tr>
+                        <td>Stella TV Premium</td>
+                        <td>3 Dispositivos</td>
+                        <td>1 Mes</td>
+                        <td>$4.00</td>
+                    </tr>
+                    <tr>
+                        <td>Combo Streaming (Disney+ & Netflix)</td>
+                        <td>Pantallas Privadas</td>
+                        <td>1 Mes</td>
+                        <td>$10.00</td>
+                    </tr>
+                    <tr>
+                        <td>Plan Semestral TELE LATINO Y STELLA</td>
+                        <td>3 Dispositivos</td>
+                        <td>6 Meses</td>
+                        <td>$19.00</td>
+                    </tr>
+                    <tr>
+                        <td>Plan Anual Ultra Full HD</td>
+                        <td>3 Dispositivos</td>
+                        <td>12 Meses</td>
+                        <td>$35.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <hr>
+
+        <section class="section-center">
+            <h2 style="font-size: 32px; color: #1e3a8a; margin-bottom: 30px;">Nuestros Enlaces Especializados</h2>
+            
+            <div class="service-group">
+                <h3>SERVICIO DE IPTV</h3>
+                <div class="card-grid">
+                    <a href="https://www.tele-latino.online/vod/latinoweb_recommend/84240" target="_blank" rel="noopener noreferrer" class="img-link"> 
+                        <img src="iconos/tele-latino.png" width="95" alt="Tele Latino">
+                    </a>
+                    <a href="https://stellatvla.com/" target="_blank" rel="noopener noreferrer" class="img-link"> 
+                        <img src="iconos/stellatv.png" width="110" alt="Stella TV">
+                    </a>
+                </div>
+            </div>
+            
+            <div class="service-group" style="margin-top: 20px;">
+                <h3>SERVICIO STREAMING</h3>
+                <div class="card-grid">
+                    <a href="https://www.netflix.com/ec/" target="_blank" rel="noopener noreferrer" class="img-link"><img src="iconos/netflix.png" width="90" alt="Netflix"></a>
+                    <a href="https://www.disneyplus.com/" target="_blank" rel="noopener noreferrer" class="img-link"><img src="iconos/disney.png" width="105" alt="Disney+"></a>
+                    <a href="https://www.hbomax.com/ec/es" target="_blank" rel="noopener noreferrer" class="img-link"><img src="iconos/hbo.png" width="90" alt="Max"></a>
+                    <a href="https://www.paramountplus.com/ec" target="_blank" rel="noopener noreferrer" class="img-link"><img src="iconos/paramount.png" width="105" alt="Paramount+"></a>
+                    <a href="https://www.primevideo.com/" target="_blank" rel="noopener noreferrer" class="img-link"><img src="iconos/primev.png" width="90" alt="Prime Video"></a>
+                </div>
+            </div>
+
+            <div class="service-group" style="margin-top: 20px;">
+                <h3>SERVICIO DE MÚSICA</h3>
+                <div class="card-grid">
+                    <a href="https://www.spotify.com" target="_blank" rel="noopener noreferrer" class="img-link"><img src="iconos/spotify.png" width="105" alt="Spotify"></a>
+                    <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="img-link"><img src="iconos/youtube.png" width="105" alt="YouTube"></a>
+                </div>
+            </div>
+        </section>
+
+        <hr>
+
+        <section id="game-section">
+          <div class="container">
+            <p class="section-tag">Mini Videojuego</p>
+
+            <div class="game-wrapper">
+              <div class="game-overlay" id="gameOverlay">
+                <div class="go-emoji">🚀</div>
+                <div class="go-title">Nave Galáctica</div>
+                <div class="go-sub">Esquiva los asteroides y sobrevive el mayor tiempo posible</div>
+                <div class="game-instructions-overlay">
+                  <span><kbd>←</kbd> <kbd>→</kbd> Teclado / Mouse / Botones Táctiles</span>
+                </div>
+                <button class="go-btn" id="startBtn" onclick="startGame()">▶ Iniciar Juego</button>
+              </div>
+
+              <div class="game-overlay hidden" id="gameOverOverlay">
+                <div class="go-emoji">💥</div>
+                <div class="go-title" id="goTitle">¡Game Over!</div>
+                <div class="go-sub" id="goSub">Tu puntaje: 0</div>
+                <button class="go-btn" onclick="restartGame()">↺ Jugar de nuevo</button>
+              </div>
+
+              <div class="game-header">
+                <div class="game-title">
+                  <div class="game-live"></div>
+                  Nave Galáctica · Canvas Game
+                </div>
+                <div class="game-stats">
+                  <div class="stat-item">
+                    <div class="stat-label">Puntaje</div>
+                    <div class="stat-value" id="scoreDisplay">0</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-label">Nivel</div>
+                    <div class="stat-value" id="levelDisplay">1</div>
+                  </div>
+                  <div class="stat-item">
+                    <div class="stat-label">Vidas</div>
+                    <div class="stat-value" id="livesDisplay">❤️❤️❤️</div>
+                  </div>
+                </div>
+              </div>
+
+              <canvas id="gameCanvas" width="700" height="420"></canvas>
+
+              <div class="touch-controls" id="touchControls">
+                <button class="touch-btn" id="btnLeft"><i class="fa-solid fa-caret-left"></i> MOVER IZQ</button>
+                <button class="touch-btn" id="btnRight">MOVER DER <i class="fa-solid fa-caret-right"></i></button>
+              </div>
+
+              <div class="game-controls">
+                <div class="game-instructions">
+                  Mover: <span class="key-badge">←</span> <span class="key-badge">→</span> / <span class="key-badge">A</span> <span class="key-badge">D</span> / Táctil
+                  &nbsp;|&nbsp;
+                  Disparo: <span class="key-badge">AUTOMÁTICO ⚡</span>
+                </div>
+                <button class="btn-restart" onclick="restartGame()">↺ Reiniciar</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr>
+
+        <section id="contacto">
+            <div class="section-center">
+                <h2>FORMULARIO DE CONTACTO</h2>
+                <p style="color: #64748b; max-width: 600px; margin: 0 auto 25px auto;"><i>Estimado usuario, por favor complete el siguiente formulario obligatorio para procesar su solicitud.</i></p>
+            </div>
+
+            <form id="formContacto" class="form-contacto" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label for="nombreUsuario">Nombre:</label>
+                    <input type="text" id="nombreUsuario" placeholder="Ingrese su nombre" required minlength="3" maxlength="30">
+                </div>
+
+                <div class="form-group">
+                    <label for="apellidoUsuario">Apellido:</label>
+                    <input type="text" id="apellidoUsuario" placeholder="Ingrese su apellido" required minlength="3" maxlength="30">
+                </div>
+
+                <div class="form-group">
+                    <label for="correoUsuario">Correo Electrónico:</label>
+                    <input type="email" id="correoUsuario" placeholder="ejemplo@correo.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="edadUsuario">Edad:</label>
+                    <input type="number" id="edadUsuario" placeholder="Ej. 25" required min="15" max="99">
+                </div>
+
+                <div class="form-group">
+                    <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+                    <input type="date" id="fechaNacimiento" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="ciudadInput">Ciudad:</label>
+                    <input type="text" id="ciudadInput" placeholder="Ej. Quito" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Género:</label>
+                    <div class="radio-checkbox-group">
+                        <label><input type="radio" name="genero" value="Masculino" required> Masculino</label>
+                        <label><input type="radio" name="genero" value="Femenino"> Femenino</label>
+                        <label><input type="radio" name="genero" value="Otro"> Otro</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Servicios de Interés:</label>
+                    <div class="radio-checkbox-group">
+                        <label><input type="checkbox" name="intereses" value="IPTV"> IPTV (Tele Latino / Stella TV)</label>
+                        <label><input type="checkbox" name="intereses" value="Streaming"> Streaming (Netflix / Disney+)</label>
+                        <label><input type="checkbox" name="intereses" value="Musica"> Música Premium (Spotify)</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="comentariosUsuario">Comentarios o dudas:</label>
+                    <textarea id="comentariosUsuario" rows="4" placeholder="Escriba aquí sus requerimientos adicionales..." maxlength="200"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="campoValidacion">N° Celular (Para validación rápida):</label>
+                    <input type="tel" id="campoValidacion" placeholder="Ej. 0999999999">
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="submit" class="btn" style="flex: 1; background-color: #2563eb;">Enviar Formulario</button>
+                    <button type="button" class="btn" style="flex: 1; background-color: #059669;" onclick="validarCampo()">Validar Celular</button>
+                </div>
+            </form>
+        </section>
+
+        <hr>
+
+        <section class="section-center" style="background: var(--bg-card); padding: 20px; border-radius: 12px;">
+            <h3>¿Te gustaría solicitar una Demo Gratis?</h3>
+            <button class="btn" style="background-color: #dc2626;" onclick="sumarClick()">Registrar Clic de Interés</button>
+            <p style="font-size: 18px; margin-top: 15px;">Clics de interés acumulados: <span id="contador" style="font-weight: bold; color: #dc2626; font-size: 24px;">0</span></p>
+        </section>
+
+        <hr>
+
+        <section class="section-center cotizador-contenedor">
+            <h3 style="color: var(--accent-color); margin-top: 0;"><i class="fa-solid fa-calculator"></i> Cotizador Express - Planes IPTV</h3>
+            <p>Elige el tiempo de suscripción para ver tu descuento automático:</p>
+            
+            <select id="mesesPlan" onchange="calcularPresupuesto()">
+                <option value="0">-- Selecciona un plan --</option>
+                <option value="1">1 Mes - Plan Básico</option>
+                <option value="3">3 Meses - Plan Trimestral</option>
+                <option value="6">6 Meses - Plan Semestral</option>
+                <option value="12">12 Meses - Plan Anual (Ahorro Máximo)</option>
+            </select>
+            
+            <h2 style="margin-top: 20px; color: var(--accent-color);" id="resultadoCotizacion">Total a pagar: $0.00</h2>
+        </section>
+
+        <hr>
+
+        <section style="line-height: 1.7; font-size: 16px; text-align: justify;">
+            <h2>Acerca de Nosotros</h2>
+            <p>En <strong>JR TECH</strong>, somos una empresa comprometida con brindar soluciones de entretenimiento digital de alta calidad para el público en general. Nos especializamos en la distribución y venta de servicios de streaming e IPTV, ofreciendo a nuestros clientes acceso a una amplia variedad de contenido audiovisual, incluyendo películas, series, deportes, canales en vivo, contenido infantil y mucho más.</p>
+            <p>Nuestro objetivo es proporcionar un servicio moderno, accesible y confiable, adaptado a las necesidades actuales del entretenimiento en el hogar. Trabajamos constantemente para ofrecer plataformas estables, con excelente calidad de imagen y una experiencia cómoda para nuestros usuarios.</p>
+        </section>
+
+        <hr>
+
+        <footer class="section-center" style="padding: 20px 0; color: #64748b;">
+            <h3>Desarrollado por: César A. Oña L.</h3>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
