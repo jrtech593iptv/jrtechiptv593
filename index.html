@@ -29,6 +29,7 @@
             <ul>
                 <li><a href="#"><i class="fa-solid fa-house"></i> Inicio</a></li>
                 <li><a href="#servicios"><i class="fa-solid fa-tv"></i> Servicios</a></li>
+                <li><a href="#faq"><i class="fa-solid fa-circle-question"></i> FAQ</a></li>
                 <li><a href="#game-section"><i class="fa-solid fa-gamepad"></i> Mini Juego</a></li>
                 <li><a href="#contacto"><i class="fa-solid fa-envelope"></i> Contacto</a></li>
             </ul>
@@ -47,9 +48,9 @@
             <p style="font-size: 16px; line-height: 1.6;">Disfruta de tus películas, series y eventos deportivos favoritos desde cualquier dispositivo compatible. Nuestro compromiso es brindarte un servicio de <em>excelente calidad visual</em> sin interrupciones molestas.</p>
             
             <div class="btn-group">
-                <button class="btn" onclick="mostrarInformacion()">Mostrar Info Plan</button>
-                <button class="btn" onclick="actualizarTitulo()">Actualizar Nombre</button>
-                <button class="btn" onclick="cambiarColor()">Cambiar Tema Oscuro</button>
+                <button class="btn" id="btnInfoPlan">Mostrar Info Plan</button>
+                <button class="btn" id="btnActualizarTitulo">Actualizar Nombre</button>
+                <button class="btn" id="btnModoOscuro">Cambiar Tema Oscuro</button>
             </div>
         </section>
 
@@ -79,6 +80,31 @@
                     </ol>
                 </div>
             </div>
+        </section>
+
+        <hr>
+
+        <!-- NUEVA SECCIÓN: PREGUNTAS FRECUENTES (FAQ) -->
+        <section id="faq">
+            <div class="section-center">
+                <h2>Preguntas Frecuentes</h2>
+                <p style="color: #64748b; margin-bottom: 25px;"><i>Haz clic en cualquier pregunta para desplegar u ocultar la respuesta.</i></p>
+            </div>
+
+            <article style="margin-bottom: 15px;">
+                <h3>¿Qué velocidad de internet necesito para un buen funcionamiento?</h3>
+                <p style="display: none;">Recomendamos una velocidad mínima de <strong>10 Mbps</strong> para contenido en Alta Definición (HD) y al menos <strong>25 Mbps</strong> para reproducción fluida en Ultra HD (4K).</p>
+            </article>
+
+            <article style="margin-bottom: 15px;">
+                <h3>¿Puedo usar mi cuenta en varios dispositivos a la vez?</h3>
+                <p style="display: none;">Sí, dependiendo del plan contratado. Nuestros planes estándar permiten hasta <strong>3 dispositivos simultáneos</strong> en la misma red o mediante accesos contratados.</p>
+            </article>
+
+            <article style="margin-bottom: 15px;">
+                <h3>¿Cómo instalo la aplicación en mi Smart TV o TV Box?</h3>
+                <p style="display: none;">Al momento de activar tu plan, te enviamos una guía paso a paso con el enlace oficial de descarga e instrucciones detalladas de configuración.</p>
+            </article>
         </section>
 
         <hr>
@@ -180,14 +206,14 @@
                 <div class="game-instructions-overlay">
                   <span><kbd>←</kbd> <kbd>→</kbd> Teclado / Mouse / Botones Táctiles</span>
                 </div>
-                <button class="go-btn" id="startBtn" onclick="startGame()">▶ Iniciar Juego</button>
+                <button class="go-btn" id="startBtn">▶ Iniciar Juego</button>
               </div>
 
               <div class="game-overlay hidden" id="gameOverOverlay">
                 <div class="go-emoji">💥</div>
                 <div class="go-title" id="goTitle">¡Game Over!</div>
                 <div class="go-sub" id="goSub">Tu puntaje: 0</div>
-                <button class="go-btn" onclick="restartGame()">↺ Jugar de nuevo</button>
+                <button class="go-btn" id="btnRestartOverlay">↺ Jugar de nuevo</button>
               </div>
 
               <div class="game-header">
@@ -224,7 +250,7 @@
                   &nbsp;|&nbsp;
                   Disparo: <span class="key-badge">AUTOMÁTICO ⚡</span>
                 </div>
-                <button class="btn-restart" onclick="restartGame()">↺ Reiniciar</button>
+                <button class="btn-restart" id="btnRestartControls">↺ Reiniciar</button>
               </div>
             </div>
           </div>
@@ -238,41 +264,41 @@
                 <p style="color: #64748b; max-width: 600px; margin: 0 auto 25px auto;"><i>Estimado usuario, por favor complete el siguiente formulario obligatorio para procesar su solicitud.</i></p>
             </div>
 
-            <form id="formContacto" class="form-contacto" onsubmit="event.preventDefault();">
+            <form id="formContacto" class="form-contacto">
                 <div class="form-group">
                     <label for="nombreUsuario">Nombre:</label>
-                    <input type="text" id="nombreUsuario" placeholder="Ingrese su nombre" required minlength="3" maxlength="30">
+                    <input type="text" id="nombreUsuario" placeholder="Ingrese su nombre">
                 </div>
 
                 <div class="form-group">
                     <label for="apellidoUsuario">Apellido:</label>
-                    <input type="text" id="apellidoUsuario" placeholder="Ingrese su apellido" required minlength="3" maxlength="30">
+                    <input type="text" id="apellidoUsuario" placeholder="Ingrese su apellido">
                 </div>
 
                 <div class="form-group">
                     <label for="correoUsuario">Correo Electrónico:</label>
-                    <input type="email" id="correoUsuario" placeholder="ejemplo@correo.com" required>
+                    <input type="email" id="correoUsuario" placeholder="ejemplo@correo.com">
                 </div>
 
                 <div class="form-group">
                     <label for="edadUsuario">Edad:</label>
-                    <input type="number" id="edadUsuario" placeholder="Ej. 25" required min="15" max="99">
+                    <input type="number" id="edadUsuario" placeholder="Ej. 25" min="15" max="99">
                 </div>
 
                 <div class="form-group">
                     <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-                    <input type="date" id="fechaNacimiento" required>
+                    <input type="date" id="fechaNacimiento">
                 </div>
 
                 <div class="form-group">
                     <label for="ciudadInput">Ciudad:</label>
-                    <input type="text" id="ciudadInput" placeholder="Ej. Quito" required>
+                    <input type="text" id="ciudadInput" placeholder="Ej. Quito">
                 </div>
 
                 <div class="form-group">
                     <label>Género:</label>
                     <div class="radio-checkbox-group">
-                        <label><input type="radio" name="genero" value="Masculino" required> Masculino</label>
+                        <label><input type="radio" name="genero" value="Masculino"> Masculino</label>
                         <label><input type="radio" name="genero" value="Femenino"> Femenino</label>
                         <label><input type="radio" name="genero" value="Otro"> Otro</label>
                     </div>
@@ -299,7 +325,7 @@
 
                 <div style="display: flex; gap: 10px; margin-top: 20px;">
                     <button type="submit" class="btn" style="flex: 1; background-color: #2563eb;">Enviar Formulario</button>
-                    <button type="button" class="btn" style="flex: 1; background-color: #059669;" onclick="validarCampo()">Validar Celular</button>
+                    <button type="button" id="btnValidarCelular" class="btn" style="flex: 1; background-color: #059669;">Validar Celular</button>
                 </div>
             </form>
         </section>
@@ -308,8 +334,8 @@
 
         <section class="section-center" style="background: var(--bg-card); padding: 20px; border-radius: 12px;">
             <h3>¿Te gustaría solicitar una Demo Gratis?</h3>
-            <button class="btn" style="background-color: #dc2626;" onclick="sumarClick()">Registrar Clic de Interés</button>
-            <p style="font-size: 18px; margin-top: 15px;">Clics de interés acumulados: <span id="contador" style="font-weight: bold; color: #dc2626; font-size: 24px;">0</span></p>
+            <button class="btn" id="btnDemo" style="background-color: #dc2626;">Registrar Clic de Interés</button>
+            <p style="font-size: 18px; margin-top: 15px;">Clics de interés acumulados: <span id="contador" style="font-weight: bold; color: #dc2626; font-size: 24px; display: inline-block;">0</span></p>
         </section>
 
         <hr>
@@ -318,7 +344,7 @@
             <h3 style="color: var(--accent-color); margin-top: 0;"><i class="fa-solid fa-calculator"></i> Cotizador Express - Planes IPTV</h3>
             <p>Elige el tiempo de suscripción para ver tu descuento automático:</p>
             
-            <select id="mesesPlan" onchange="calcularPresupuesto()">
+            <select id="mesesPlan">
                 <option value="0">-- Selecciona un plan --</option>
                 <option value="1">1 Mes - Plan Básico</option>
                 <option value="3">3 Meses - Plan Trimestral</option>
@@ -329,32 +355,6 @@
             <h2 style="margin-top: 20px; color: var(--accent-color);" id="resultadoCotizacion">Total a pagar: $0.00</h2>
         </section>
 
-
-        <hr>
-
-        <!-- NUEVA SECCIÓN: PREGUNTAS FRECUENTES -->
-        <section id="faq">
-            <div class="section-center">
-                <h2>Preguntas Frecuentes</h2>
-                <p style="color: #64748b; margin-bottom: 25px;"><i>Resuelve tus dudas sobre nuestro servicio de entretenimiento digital.</i></p>
-            </div>
-
-            <article style="margin-bottom: 20px;">
-                <h3>¿Qué velocidad de internet necesito para un buen funcionamiento?</h3>
-                <p>Recomendamos una velocidad mínima de <strong>10 Mbps</strong> para contenido en Alta Definición (HD) y al menos <strong>25 Mbps</strong> para reproducción fluida en Ultra HD (4K).</p>
-            </article>
-
-            <article style="margin-bottom: 20px;">
-                <h3>¿Puedo usar mi cuenta en varios dispositivos a la vez?</h3>
-                <p>Sí, dependiendo del plan contratado. Nuestros planes estándar permiten hasta <strong>3 dispositivos simultáneos</strong> en la misma red o según los accesos de pantallas privadas solicitados.</p>
-            </article>
-
-            <article style="margin-bottom: 20px;">
-                <h3>¿Cómo instalo la aplicación en mi Smart TV o Tv Box?</h3>
-                <p>Al momento de activar tu plan, te enviamos una guía paso a paso con el enlace oficial de descarga e instrucciones detalladas para la configuración de tu dispositivo.</p>
-            </article>
-        </section>
-        
         <hr>
 
         <section style="line-height: 1.7; font-size: 16px; text-align: justify;">
