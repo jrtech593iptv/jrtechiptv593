@@ -1,15 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     iniciarReloj();
-    initCanvas(); // Mantiene la inicialización de tu mini juego
-    inicializarFAQ();
-    inicializarModoOscuro();
-    inicializarContador();
-    inicializarFormulario();
+    initCanvas();
 });
-
-// ==========================================
-// FUNCIONES EXISTENTES
-// ==========================================
 
 // Reloj Digital Dinámico
 function iniciarReloj() {
@@ -42,100 +34,332 @@ function actualizarTitulo() {
     }
 }
 
-// ==========================================
-// NUEVAS FUNCIONALIDADES REQUERIDAS
-// ==========================================
-
-// FUNCIONALIDAD 1: FAQ Desplegable (Usa document.querySelectorAll y classList.toggle)
-function inicializarFAQ() {
-    const preguntas = document.querySelectorAll("#faq article");
-
-    preguntas.forEach(articulo => {
-        articulo.style.cursor = "pointer";
-        articulo.addEventListener("click", () => {
-            articulo.classList.toggle("faq-abierto");
-            const respuesta = articulo.querySelector("p");
-            if (respuesta) {
-                respuesta.style.display = articulo.classList.contains("faq-abierto") ? "block" : "none";
-            }
-        });
-    });
-}
-
-// FUNCIONALIDAD 2: Modo Oscuro (Usa document.getElementById y classList.toggle)
+// 3. Alternar Tema Oscuro / Tema Claro
 function cambiarColor() {
     document.body.classList.toggle("dark-mode");
 }
 
-function inicializarModoOscuro() {
-    // Escucha eventos si existe un botón específico para el tema
-    const btnOscuro = document.getElementById("btnModoOscuro");
-    if (btnOscuro) {
-        btnOscuro.addEventListener("click", cambiarColor);
+// 4. Cotizador Express de Planes
+function calcularPresupuesto() {
+    const selector = document.getElementById("mesesPlan");
+    const resultado = document.getElementById("resultadoCotizacion");
+    const meses = parseInt(selector.value);
+    
+    const preciosPlanes = {
+        0: 0,
+        1: 4.00,
+        3: 10.25,
+        6: 19.00,
+        12: 35.00
+    };
+
+    if (meses === 0) {
+        resultado.textContent = "Total a pagar: $0.00";
+        return;
     }
+
+    const total = preciosPlanes[meses] || 0;
+    resultado.textContent = `Total a pagar: $${total.toFixed(2)}`;
 }
 
-// FUNCIONALIDAD 3: Contador de Interés (Usa document.getElementById y classList)
-let clics = 0;
+// 5. Contador de clics
+let clickCount = 0;
 function sumarClick() {
-    clics++;
+    clickCount++;
     const contador = document.getElementById("contador");
     if (contador) {
-        contador.textContent = clics;
-        contador.classList.add("activo");
-        setTimeout(() => contador.classList.remove("activo"), 300);
+        contador.textContent = clickCount;
     }
 }
 
-function inicializarContador() {
-    const btnDemo = document.querySelector("button[onclick='sumarClick()']");
-    if (btnDemo) {
-        btnDemo.addEventListener("click", sumarClick);
+// 6. Validación de N° Celular (Ecuador: 10 dígitos iniciando con 09)
+function validarCampo() {
+    const campo = document.getElementById("campoValidacion").value.trim();
+    const regexEcuador = /^09\d{8}$/; 
+
+    if (regexEcuador.test(campo)) {
+        alert("✅ Número de celular de Ecuador válido. Un asesor de JR TECH se contactará con usted.");
+    } else {
+        alert("❌ Por favor, ingrese un número de celular válido de Ecuador (10 dígitos e iniciado con 09).");
     }
 }
 
-// PARTE 12: Validación del Formulario de Contacto
-function inicializarFormulario() {
-    const formContacto = document.getElementById("formContacto");
+// ==========================================
+// LÓGICA DEL MINI VIDEOJUEGO (MÓVIL + PC)
+// ==========================================
 
-    if (formContacto) {
-        formContacto.addEventListener("submit", (event) => {
-            event.preventDefault(); // Evita que la página se recargue
+let canvas, ctx;
+let gameLoopId = null;
+let gameActive = false;
 
-            const nombre = document.getElementById("nombreUsuario").value.trim();
-            const apellido = document.getElementById("apellidoUsuario").value.trim();
-            const correo = document.getElementById("correoUsuario").value.trim();
+// Estado del Juego
+let score = 0;
+let level = 1;
+let lives = 3;
 
-            let mensajeRespuesta = document.getElementById("mensajeFormulario");
-            if (!mensajeRespuesta) {
-                mensajeRespuesta = document.createElement("p");
-                mensajeRespuesta.id = "mensajeFormulario";
-                mensajeRespuesta.style.marginTop = "15px";
-                mensajeRespuesta.style.fontWeight = "bold";
-                mensajeRespuesta.style.textAlign = "center";
-                formContacto.appendChild(mensajeRespuesta);
-            }
+// Estado de Controles (Teclado y Táctil)
+const keys = {
+    left: false,
+    right: false
+};
 
-            // Validación de campos obligatorios
-            if (nombre === "" || apellido === "" || correo === "") {
-                mensajeRespuesta.style.color = "#dc2626";
-                mensajeRespuesta.textContent = "❌ Por favor, complete todos los campos obligatorios.";
-                return;
-            }
+// Objeto Jugador (Nave)
+const player = {
+    x: 0,
+    y: 0,
+    width: 40,
+    height: 40,
+    speed: 6,
+    color: '#38bdf8'
+};
 
-            // Expresión regular para validar correo electrónico
-            const expRegCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!expRegCorreo.test(correo)) {
-                mensajeRespuesta.style.color = "#dc2626";
-                mensajeRespuesta.textContent = "❌ Por favor, ingrese un correo electrónico válido.";
-                return;
-            }
+// Arreglos de proyectiles, enemigos y estrellas
+let bullets = [];
+let asteroids = [];
+let stars = [];
+let lastShot = 0;
 
-            // Formulario enviado con éxito
-            mensajeRespuesta.style.color = "#16a34a";
-            mensajeRespuesta.textContent = `¡Gracias, ${nombre}! Tu solicitud ha sido enviada con éxito.`;
+function initCanvas() {
+    canvas = document.getElementById("gameCanvas");
+    if (!canvas) return;
+    ctx = canvas.getContext("2d");
 
-            formContacto.reset();
+    // Posición inicial del jugador
+    player.x = canvas.width / 2 - player.width / 2;
+    player.y = canvas.height - player.height - 15;
+
+    // Generar fondo de estrellas
+    stars = [];
+    for (let i = 0; i < 50; i++) {
+        stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 2,
+            speed: Math.random() * 0.5 + 0.2
         });
     }
+
+    // Eventos de teclado para PC
+    window.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") keys.left = true;
+        if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") keys.right = true;
+    });
+
+    window.addEventListener("keyup", (e) => {
+        if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") keys.left = false;
+        if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") keys.right = false;
+    });
+
+    // Control por Mouse (PC)
+    canvas.addEventListener("mousemove", (e) => {
+        if (!gameActive) return;
+        const rect = canvas.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+        player.x = Math.max(0, Math.min(canvas.width - player.width, mouseX - player.width / 2));
+    });
+
+    // Control Táctil Directo sobre el Canvas (Móvil)
+    canvas.addEventListener("touchmove", (e) => {
+        if (!gameActive) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        const touchX = (touch.clientX - rect.left) * (canvas.width / rect.width);
+        player.x = Math.max(0, Math.min(canvas.width - player.width, touchX - player.width / 2));
+    }, { passive: false });
+
+    // Configuración de Botones Táctiles en Pantalla
+    const btnLeft = document.getElementById("btnLeft");
+    const btnRight = document.getElementById("btnRight");
+
+    if (btnLeft && btnRight) {
+        // Eventos Izquierda
+        btnLeft.addEventListener("touchstart", (e) => { e.preventDefault(); keys.left = true; }, { passive: false });
+        btnLeft.addEventListener("touchend", (e) => { e.preventDefault(); keys.left = false; }, { passive: false });
+        btnLeft.addEventListener("mousedown", () => { keys.left = true; });
+        btnLeft.addEventListener("mouseup", () => { keys.left = false; });
+
+        // Eventos Derecha
+        btnRight.addEventListener("touchstart", (e) => { e.preventDefault(); keys.right = true; }, { passive: false });
+        btnRight.addEventListener("touchend", (e) => { e.preventDefault(); keys.right = false; }, { passive: false });
+        btnRight.addEventListener("mousedown", () => { keys.right = true; });
+        btnRight.addEventListener("mouseup", () => { keys.right = false; });
+    }
+}
+
+function startGame() {
+    if (!canvas) initCanvas();
+
+    score = 0;
+    level = 1;
+    lives = 3;
+    bullets = [];
+    asteroids = [];
+    gameActive = true;
+
+    player.x = canvas.width / 2 - player.width / 2;
+
+    actualizarHUD();
+
+    document.getElementById("gameOverlay").classList.add("hidden");
+    document.getElementById("gameOverOverlay").classList.add("hidden");
+
+    if (gameLoopId) cancelAnimationFrame(gameLoopId);
+    gameLoop();
+}
+
+function restartGame() {
+    startGame();
+}
+
+// Disparo automático cada 180ms
+function disparar() {
+    const ahora = Date.now();
+    if (ahora - lastShot > 180) { 
+        bullets.push({
+            x: player.x + player.width / 2 - 3,
+            y: player.y,
+            width: 6,
+            height: 12,
+            speed: 9,
+            color: '#facc15'
+        });
+        lastShot = ahora;
+    }
+}
+
+function crearAsteroide() {
+    const size = Math.random() * 25 + 20;
+    asteroids.push({
+        x: Math.random() * (canvas.width - size),
+        y: -size,
+        size: size,
+        speed: (Math.random() * 2 + 1.5) + (level * 0.4),
+        color: '#94a3b8'
+    });
+}
+
+function gameLoop() {
+    if (!gameActive) return;
+
+    // 1. Limpiar Canvas
+    ctx.fillStyle = '#030712';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // 2. Fondo de Estrellas
+    ctx.fillStyle = '#ffffff';
+    stars.forEach(s => {
+        s.y += s.speed;
+        if (s.y > canvas.height) s.y = 0;
+        ctx.fillRect(s.x, s.y, s.size, s.size);
+    });
+
+    // 3. Movimiento del Jugador
+    if (keys.left && player.x > 0) player.x -= player.speed;
+    if (keys.right && player.x < canvas.width - player.width) player.x += player.speed;
+
+    // Disparo Automático
+    disparar();
+
+    // Dibujar Nave
+    ctx.fillStyle = player.color;
+    ctx.beginPath();
+    ctx.moveTo(player.x + player.width / 2, player.y);
+    ctx.lineTo(player.x, player.y + player.height);
+    ctx.lineTo(player.x + player.width / 2, player.y + player.height - 8);
+    ctx.lineTo(player.x + player.width, player.y + player.height);
+    ctx.closePath();
+    ctx.fill();
+
+    // 4. Actualizar Balas
+    for (let i = bullets.length - 1; i >= 0; i--) {
+        const b = bullets[i];
+        b.y -= b.speed;
+        ctx.fillStyle = b.color;
+        ctx.fillRect(b.x, b.y, b.width, b.height);
+
+        if (b.y < -10) bullets.splice(i, 1);
+    }
+
+    // 5. Crear Asteroides
+    if (Math.random() < 0.03 + (level * 0.005)) {
+        crearAsteroide();
+    }
+
+    // 6. Actualizar Asteroides y Colisiones
+    for (let i = asteroids.length - 1; i >= 0; i--) {
+        const ast = asteroids[i];
+        ast.y += ast.speed;
+
+        ctx.fillStyle = ast.color;
+        ctx.beginPath();
+        ctx.arc(ast.x + ast.size / 2, ast.y + ast.size / 2, ast.size / 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Colisión Bala vs Asteroide
+        for (let j = bullets.length - 1; j >= 0; j--) {
+            const b = bullets[j];
+            if (
+                b.x < ast.x + ast.size &&
+                b.x + b.width > ast.x &&
+                b.y < ast.y + ast.size &&
+                b.y + b.height > ast.y
+            ) {
+                asteroids.splice(i, 1);
+                bullets.splice(j, 1);
+                score += 10;
+
+                if (score % 100 === 0) {
+                    level++;
+                }
+
+                actualizarHUD();
+                break;
+            }
+        }
+
+        // Colisión Asteroide vs Nave
+        if (
+            player.x < ast.x + ast.size &&
+            player.x + player.width > ast.x &&
+            player.y < ast.y + ast.size &&
+            player.y + player.height > ast.y
+        ) {
+            asteroids.splice(i, 1);
+            lives--;
+            actualizarHUD();
+
+            if (lives <= 0) {
+                gameOver();
+                return;
+            }
+        }
+
+        if (ast.y > canvas.height + 30) {
+            asteroids.splice(i, 1);
+        }
+    }
+
+    gameLoopId = requestAnimationFrame(gameLoop);
+}
+
+function actualizarHUD() {
+    const scoreElem = document.getElementById("scoreDisplay");
+    const levelElem = document.getElementById("levelDisplay");
+    const livesElem = document.getElementById("livesDisplay");
+
+    if (scoreElem) scoreElem.textContent = score;
+    if (levelElem) levelElem.textContent = level;
+    if (livesElem) livesElem.textContent = "❤️".repeat(Math.max(0, lives));
+}
+
+function gameOver() {
+    gameActive = false;
+    if (gameLoopId) cancelAnimationFrame(gameLoopId);
+
+    const gameOverOverlay = document.getElementById("gameOverOverlay");
+    const goSub = document.getElementById("goSub");
+
+    if (goSub) goSub.textContent = `Lograste alcanzar ${score} puntos en el Nivel ${level}.`;
+    if (gameOverOverlay) gameOverOverlay.classList.remove("hidden");
 }
