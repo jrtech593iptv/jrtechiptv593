@@ -78,31 +78,12 @@ footer {
     margin: 10px 0 5px 0;
 }
 
-.subtitulo {
-    font-size: 18px;
-    color: #64748b;
-}
-
 .reloj-contenedor {
     background-color: var(--bg-card);
     padding: 15px;
     border-radius: 8px;
     margin-top: 15px;
     border: 1px solid var(--border-color);
-}
-
-.reloj-titulo {
-    font-weight: bold;
-    margin: 0 0 5px 0;
-    color: var(--accent-color);
-    font-size: 14px;
-    letter-spacing: 1px;
-}
-
-#reloj {
-    margin: 0;
-    color: var(--accent-color);
-    font-size: 32px;
 }
 
 /* Navegación */
@@ -125,10 +106,6 @@ nav {
     margin: 0;
     width: 100%;
     justify-content: center;
-}
-
-.nav-links li {
-    list-style: none;
 }
 
 nav a {
@@ -173,37 +150,68 @@ nav a:hover {
     box-shadow: 0 4px 12px var(--card-shadow);
 }
 
-.cards {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.card {
-    width: 300px;
-    padding: 20px;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    background-color: var(--bg-card);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px var(--card-shadow);
-}
-
-.card h3 {
-    color: var(--accent-color);
-    margin-bottom: 10px;
-    font-size: 20px;
-}
-
 .section-center {
     text-align: center;
 }
 
+/* Acordeón FAQ (Nueva Sección) */
+.faq-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.faq-item {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--bg-card);
+    transition: box-shadow 0.3s ease;
+}
+
+.faq-question {
+    width: 100%;
+    padding: 15px 20px;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.faq-question:hover {
+    background-color: rgba(37, 99, 235, 0.1);
+}
+
+.faq-question i {
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-question i {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 20px;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 150px;
+    padding: 15px 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Grids y Listas */
 .grid-listas {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -218,7 +226,6 @@ nav a:hover {
     line-height: 1.8;
 }
 
-/* Tablas */
 .tabla-servicios {
     width: 100%;
     border-collapse: collapse;
@@ -238,7 +245,6 @@ nav a:hover {
     background-color: var(--bg-card);
 }
 
-/* Iconos */
 .card-grid {
     display: flex;
     justify-content: center;
@@ -291,11 +297,6 @@ nav a:hover {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
-}
-
-.radio-checkbox-group label {
-    font-weight: normal;
-    cursor: pointer;
 }
 
 /* Mini Videojuego */
@@ -381,9 +382,8 @@ nav a:hover {
     touch-action: none;
 }
 
-/* Botones Táctiles para Móvil */
 .touch-controls {
-    display: none; /* Oculto por defecto en PC */
+    display: none;
     justify-content: space-between;
     gap: 10px;
     padding: 10px 15px;
@@ -421,7 +421,6 @@ nav a:hover {
     z-index: 10;
     padding: 20px;
     gap: 12px;
-    transition: opacity 0.3s ease;
 }
 
 .game-overlay.hidden {
@@ -515,10 +514,7 @@ nav a:hover {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    header,
-    nav,
-    section,
-    footer {
+    header, nav, section, footer {
         padding: 15px 10px;
         margin: 10px 0;
     }
@@ -534,16 +530,6 @@ nav a:hover {
         text-align: center;
     }
 
-    .cards {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .card {
-        width: 100%;
-        max-width: 350px;
-    }
-
     .titulo-principal {
         font-size: 24px;
     }
@@ -552,7 +538,6 @@ nav a:hover {
         width: 100%;
     }
 
-    /* Mostrar controles táctiles en dispositivos móviles */
     .touch-controls {
         display: flex;
     }
