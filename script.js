@@ -1,9 +1,44 @@
 document.addEventListener("DOMContentLoaded", () => {
     iniciarReloj();
     initCanvas();
+    inicializarEventos();
 });
 
-// Reloj Digital Dinámico
+function inicializarEventos() {
+    // Eventos DOM para botones principales
+    const btnInfoPlan = document.getElementById("btnInfoPlan");
+    if (btnInfoPlan) btnInfoPlan.addEventListener("click", mostrarInformacion);
+
+    const btnActualizarTitulo = document.getElementById("btnActualizarTitulo");
+    if (btnActualizarTitulo) btnActualizarTitulo.addEventListener("click", actualizarTitulo);
+
+    const btnCambiarTema = document.getElementById("btnCambiarTema");
+    if (btnCambiarTema) btnCambiarTema.addEventListener("click", cambiarColor);
+
+    const btnSumarClick = document.getElementById("btnSumarClick");
+    if (btnSumarClick) btnSumarClick.addEventListener("click", sumarClick);
+
+    const mesesPlan = document.getElementById("mesesPlan");
+    if (mesesPlan) mesesPlan.addEventListener("change", calcularPresupuesto);
+
+    const btnValidarCelular = document.getElementById("btnValidarCelular");
+    if (btnValidarCelular) btnValidarCelular.addEventListener("click", validarCampo);
+
+    // Evento Formulario con e.preventDefault()
+    const formContacto = document.getElementById("formContacto");
+    if (formContacto) formContacto.addEventListener("submit", validarFormularioCompleto);
+
+    // Funcionalidad FAQ (Acordeón con classList.toggle)
+    const faqQuestions = document.querySelectorAll(".faq-question");
+    faqQuestions.forEach(question => {
+        question.addEventListener("click", () => {
+            const faqItem = question.parentElement;
+            faqItem.classList.toggle("active");
+        });
+    });
+}
+
+// 1. Reloj Digital Dinámico
 function iniciarReloj() {
     setInterval(() => {
         const ahora = new Date();
@@ -18,7 +53,7 @@ function iniciarReloj() {
     }, 1000);
 }
 
-// 1. Mostrar información del Plan Dinámicamente
+// 2. Funcionalidad 1: Mensaje Dinámico
 function mostrarInformacion() {
     const mensajeH2 = document.getElementById("mensaje");
     if (mensajeH2) {
@@ -26,7 +61,7 @@ function mostrarInformacion() {
     }
 }
 
-// 2. Cambiar Nombre
+// 3. Funcionalidad 2: Cambio de Contenido
 function actualizarTitulo() {
     const titulo = document.querySelector(".titulo-principal");
     if (titulo) {
@@ -34,45 +69,31 @@ function actualizarTitulo() {
     }
 }
 
-// 3. Alternar Tema Oscuro / Tema Claro
+// 4. Funcionalidad 3: Modo Oscuro (Uso de classList.toggle)
 function cambiarColor() {
     document.body.classList.toggle("dark-mode");
 }
 
-// 4. Cotizador Express de Planes
+// 5. Cotizador Express
 function calcularPresupuesto() {
     const selector = document.getElementById("mesesPlan");
     const resultado = document.getElementById("resultadoCotizacion");
     const meses = parseInt(selector.value);
     
-    const preciosPlanes = {
-        0: 0,
-        1: 4.00,
-        3: 10.25,
-        6: 19.00,
-        12: 35.00
-    };
-
-    if (meses === 0) {
-        resultado.textContent = "Total a pagar: $0.00";
-        return;
-    }
-
+    const preciosPlanes = { 0: 0, 1: 4.00, 3: 10.80, 6: 19.00, 12: 35.00 };
     const total = preciosPlanes[meses] || 0;
     resultado.textContent = `Total a pagar: $${total.toFixed(2)}`;
 }
 
-// 5. Contador de clics
+// 6. Contador Interactivo
 let clickCount = 0;
 function sumarClick() {
     clickCount++;
     const contador = document.getElementById("contador");
-    if (contador) {
-        contador.textContent = clickCount;
-    }
+    if (contador) contador.textContent = clickCount;
 }
 
-// 6. Validación de N° Celular (Ecuador: 10 dígitos iniciando con 09)
+// 7. Validación rápida de Celular
 function validarCampo() {
     const campo = document.getElementById("campoValidacion").value.trim();
     const regexEcuador = /^09\d{8}$/; 
@@ -84,26 +105,38 @@ function validarCampo() {
     }
 }
 
+// 8. Funcionalidad 4: Validación de Formulario Completo
+function validarFormularioCompleto(e) {
+    e.preventDefault();
+    
+    const nombre = document.getElementById("nombreUsuario").value.trim();
+    const correo = document.getElementById("correoUsuario").value.trim();
+    const mensajeForm = document.getElementById("mensajeFormulario");
+
+    if (nombre === "" || correo === "") {
+        mensajeForm.style.color = "#dc2626";
+        mensajeForm.textContent = "⚠️ Por favor complete todos los campos obligatorios (Nombre y Correo).";
+    } else {
+        mensajeForm.style.color = "#16a34a";
+        mensajeForm.textContent = "¡Formulario enviado correctamente! Nos pondremos en contacto pronto.";
+        document.getElementById("formContacto").reset();
+    }
+}
+
 // ==========================================
-// LÓGICA DEL MINI VIDEOJUEGO (MÓVIL + PC)
+// LÓGICA DEL MINI VIDEOJUEGO (CANVAS)
 // ==========================================
 
 let canvas, ctx;
 let gameLoopId = null;
 let gameActive = false;
 
-// Estado del Juego
 let score = 0;
 let level = 1;
 let lives = 3;
 
-// Estado de Controles (Teclado y Táctil)
-const keys = {
-    left: false,
-    right: false
-};
+const keys = { left: false, right: false };
 
-// Objeto Jugador (Nave)
 const player = {
     x: 0,
     y: 0,
@@ -113,7 +146,6 @@ const player = {
     color: '#38bdf8'
 };
 
-// Arreglos de proyectiles, enemigos y estrellas
 let bullets = [];
 let asteroids = [];
 let stars = [];
@@ -124,11 +156,9 @@ function initCanvas() {
     if (!canvas) return;
     ctx = canvas.getContext("2d");
 
-    // Posición inicial del jugador
     player.x = canvas.width / 2 - player.width / 2;
     player.y = canvas.height - player.height - 15;
 
-    // Generar fondo de estrellas
     stars = [];
     for (let i = 0; i < 50; i++) {
         stars.push({
@@ -139,7 +169,6 @@ function initCanvas() {
         });
     }
 
-    // Eventos de teclado para PC
     window.addEventListener("keydown", (e) => {
         if (e.key === "ArrowLeft" || e.key === "a" || e.key === "A") keys.left = true;
         if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") keys.right = true;
@@ -150,7 +179,6 @@ function initCanvas() {
         if (e.key === "ArrowRight" || e.key === "d" || e.key === "D") keys.right = false;
     });
 
-    // Control por Mouse (PC)
     canvas.addEventListener("mousemove", (e) => {
         if (!gameActive) return;
         const rect = canvas.getBoundingClientRect();
@@ -158,7 +186,6 @@ function initCanvas() {
         player.x = Math.max(0, Math.min(canvas.width - player.width, mouseX - player.width / 2));
     });
 
-    // Control Táctil Directo sobre el Canvas (Móvil)
     canvas.addEventListener("touchmove", (e) => {
         if (!gameActive) return;
         e.preventDefault();
@@ -168,23 +195,29 @@ function initCanvas() {
         player.x = Math.max(0, Math.min(canvas.width - player.width, touchX - player.width / 2));
     }, { passive: false });
 
-    // Configuración de Botones Táctiles en Pantalla
     const btnLeft = document.getElementById("btnLeft");
     const btnRight = document.getElementById("btnRight");
 
     if (btnLeft && btnRight) {
-        // Eventos Izquierda
         btnLeft.addEventListener("touchstart", (e) => { e.preventDefault(); keys.left = true; }, { passive: false });
         btnLeft.addEventListener("touchend", (e) => { e.preventDefault(); keys.left = false; }, { passive: false });
         btnLeft.addEventListener("mousedown", () => { keys.left = true; });
         btnLeft.addEventListener("mouseup", () => { keys.left = false; });
 
-        // Eventos Derecha
         btnRight.addEventListener("touchstart", (e) => { e.preventDefault(); keys.right = true; }, { passive: false });
         btnRight.addEventListener("touchend", (e) => { e.preventDefault(); keys.right = false; }, { passive: false });
         btnRight.addEventListener("mousedown", () => { keys.right = true; });
         btnRight.addEventListener("mouseup", () => { keys.right = false; });
     }
+
+    const startBtn = document.getElementById("startBtn");
+    if (startBtn) startBtn.addEventListener("click", startGame);
+
+    const restartBtnOverlay = document.getElementById("restartBtnOverlay");
+    if (restartBtnOverlay) restartBtnOverlay.addEventListener("click", startGame);
+
+    const btnRestartGame = document.getElementById("btnRestartGame");
+    if (btnRestartGame) btnRestartGame.addEventListener("click", startGame);
 }
 
 function startGame() {
@@ -208,11 +241,6 @@ function startGame() {
     gameLoop();
 }
 
-function restartGame() {
-    startGame();
-}
-
-// Disparo automático cada 180ms
 function disparar() {
     const ahora = Date.now();
     if (ahora - lastShot > 180) { 
@@ -242,11 +270,9 @@ function crearAsteroide() {
 function gameLoop() {
     if (!gameActive) return;
 
-    // 1. Limpiar Canvas
     ctx.fillStyle = '#030712';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // 2. Fondo de Estrellas
     ctx.fillStyle = '#ffffff';
     stars.forEach(s => {
         s.y += s.speed;
@@ -254,14 +280,11 @@ function gameLoop() {
         ctx.fillRect(s.x, s.y, s.size, s.size);
     });
 
-    // 3. Movimiento del Jugador
     if (keys.left && player.x > 0) player.x -= player.speed;
     if (keys.right && player.x < canvas.width - player.width) player.x += player.speed;
 
-    // Disparo Automático
     disparar();
 
-    // Dibujar Nave
     ctx.fillStyle = player.color;
     ctx.beginPath();
     ctx.moveTo(player.x + player.width / 2, player.y);
@@ -271,7 +294,6 @@ function gameLoop() {
     ctx.closePath();
     ctx.fill();
 
-    // 4. Actualizar Balas
     for (let i = bullets.length - 1; i >= 0; i--) {
         const b = bullets[i];
         b.y -= b.speed;
@@ -281,12 +303,10 @@ function gameLoop() {
         if (b.y < -10) bullets.splice(i, 1);
     }
 
-    // 5. Crear Asteroides
     if (Math.random() < 0.03 + (level * 0.005)) {
         crearAsteroide();
     }
 
-    // 6. Actualizar Asteroides y Colisiones
     for (let i = asteroids.length - 1; i >= 0; i--) {
         const ast = asteroids[i];
         ast.y += ast.speed;
@@ -296,7 +316,6 @@ function gameLoop() {
         ctx.arc(ast.x + ast.size / 2, ast.y + ast.size / 2, ast.size / 2, 0, Math.PI * 2);
         ctx.fill();
 
-        // Colisión Bala vs Asteroide
         for (let j = bullets.length - 1; j >= 0; j--) {
             const b = bullets[j];
             if (
@@ -309,16 +328,12 @@ function gameLoop() {
                 bullets.splice(j, 1);
                 score += 10;
 
-                if (score % 100 === 0) {
-                    level++;
-                }
-
+                if (score % 100 === 0) level++;
                 actualizarHUD();
                 break;
             }
         }
 
-        // Colisión Asteroide vs Nave
         if (
             player.x < ast.x + ast.size &&
             player.x + player.width > ast.x &&
