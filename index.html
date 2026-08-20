@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>R
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>JR TECH - Entretenimiento Digital</title>
-    R
+    
+    <!-- FontAwesome y Estilos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -29,6 +30,7 @@
             <ul>
                 <li><a href="#"><i class="fa-solid fa-house"></i> Inicio</a></li>
                 <li><a href="#servicios"><i class="fa-solid fa-tv"></i> Servicios</a></li>
+                <li><a href="#faq-section"><i class="fa-solid fa-circle-question"></i> Preguntas Frecuentes</a></li>
                 <li><a href="#game-section"><i class="fa-solid fa-gamepad"></i> Mini Juego</a></li>
                 <li><a href="#contacto"><i class="fa-solid fa-envelope"></i> Contacto</a></li>
             </ul>
@@ -47,9 +49,42 @@
             <p style="font-size: 16px; line-height: 1.6;">Disfruta de tus películas, series y eventos deportivos favoritos desde cualquier dispositivo compatible. Nuestro compromiso es brindarte un servicio de <em>excelente calidad visual</em> sin interrupciones molestas.</p>
             
             <div class="btn-group">
-                <button class="btn" onclick="mostrarInformacion()">Mostrar Info Plan</button>
-                <button class="btn" onclick="actualizarTitulo()">Actualizar Nombre</button>
-                <button class="btn" onclick="cambiarColor()">Cambiar Tema Oscuro</button>
+                <button class="btn" id="btnInfoPlan">Mostrar Info Plan</button>
+                <button class="btn" id="btnActualizarTitulo">Actualizar Nombre</button>
+                <button class="btn" id="btnCambiarTema">Cambiar Tema Oscuro</button>
+            </div>
+        </section>
+
+        <hr>
+
+        <!-- SECCIÓN AGREGADA: Preguntas Frecuentes (FAQ) -->
+        <section id="faq-section">
+            <div class="section-center">
+                <h2>Preguntas Frecuentes (FAQ)</h2>
+                <p style="color: #64748b;">Resolvemos tus dudas más comunes de forma inmediata.</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <button class="faq-question">¿Qué velocidad de internet necesito para el servicio? <i class="fa-solid fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Recomendamos una velocidad mínima de 10 Mbps para contenido HD y al menos 25 Mbps para transmisiones estables en 4K UHD.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">¿En cuántos dispositivos puedo usar mi cuenta? <i class="fa-solid fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>Dependiendo del plan seleccionado, puedes conectar hasta 3 dispositivos de forma simultánea con el mismo acceso.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">¿Ofrecen demos o pruebas gratuitas? <i class="fa-solid fa-chevron-down"></i></button>
+                    <div class="faq-answer">
+                        <p>¡Sí! Puedes solicitar una demo de prueba por WhatsApp o registrar tu clic de interés en nuestra sección inferior.</p>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -168,6 +203,7 @@
 
         <hr>
 
+        <!-- MINI JUEGO INTERACTIVO -->
         <section id="game-section">
           <div class="container">
             <p class="section-tag">Mini Videojuego</p>
@@ -180,14 +216,14 @@
                 <div class="game-instructions-overlay">
                   <span><kbd>←</kbd> <kbd>→</kbd> Teclado / Mouse / Botones Táctiles</span>
                 </div>
-                <button class="go-btn" id="startBtn" onclick="startGame()">▶ Iniciar Juego</button>
+                <button class="go-btn" id="startBtn">▶ Iniciar Juego</button>
               </div>
 
               <div class="game-overlay hidden" id="gameOverOverlay">
                 <div class="go-emoji">💥</div>
                 <div class="go-title" id="goTitle">¡Game Over!</div>
                 <div class="go-sub" id="goSub">Tu puntaje: 0</div>
-                <button class="go-btn" onclick="restartGame()">↺ Jugar de nuevo</button>
+                <button class="go-btn" id="restartBtnOverlay">↺ Jugar de nuevo</button>
               </div>
 
               <div class="game-header">
@@ -224,7 +260,7 @@
                   &nbsp;|&nbsp;
                   Disparo: <span class="key-badge">AUTOMÁTICO ⚡</span>
                 </div>
-                <button class="btn-restart" onclick="restartGame()">↺ Reiniciar</button>
+                <button class="btn-restart" id="btnRestartGame">↺ Reiniciar</button>
               </div>
             </div>
           </div>
@@ -232,47 +268,48 @@
 
         <hr>
 
+        <!-- FORMULARIO DE CONTACTO -->
         <section id="contacto">
             <div class="section-center">
                 <h2>FORMULARIO DE CONTACTO</h2>
                 <p style="color: #64748b; max-width: 600px; margin: 0 auto 25px auto;"><i>Estimado usuario, por favor complete el siguiente formulario obligatorio para procesar su solicitud.</i></p>
             </div>
 
-            <form id="formContacto" class="form-contacto" onsubmit="event.preventDefault();">
+            <form id="formContacto" class="form-contacto">
                 <div class="form-group">
                     <label for="nombreUsuario">Nombre:</label>
-                    <input type="text" id="nombreUsuario" placeholder="Ingrese su nombre" required minlength="3" maxlength="30">
+                    <input type="text" id="nombreUsuario" placeholder="Ingrese su nombre">
                 </div>
 
                 <div class="form-group">
                     <label for="apellidoUsuario">Apellido:</label>
-                    <input type="text" id="apellidoUsuario" placeholder="Ingrese su apellido" required minlength="3" maxlength="30">
+                    <input type="text" id="apellidoUsuario" placeholder="Ingrese su apellido">
                 </div>
 
                 <div class="form-group">
                     <label for="correoUsuario">Correo Electrónico:</label>
-                    <input type="email" id="correoUsuario" placeholder="ejemplo@correo.com" required>
+                    <input type="email" id="correoUsuario" placeholder="ejemplo@correo.com">
                 </div>
 
                 <div class="form-group">
                     <label for="edadUsuario">Edad:</label>
-                    <input type="number" id="edadUsuario" placeholder="Ej. 25" required min="15" max="99">
+                    <input type="number" id="edadUsuario" placeholder="Ej. 25">
                 </div>
 
                 <div class="form-group">
                     <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-                    <input type="date" id="fechaNacimiento" required>
+                    <input type="date" id="fechaNacimiento">
                 </div>
 
                 <div class="form-group">
                     <label for="ciudadInput">Ciudad:</label>
-                    <input type="text" id="ciudadInput" placeholder="Ej. Quito" required>
+                    <input type="text" id="ciudadInput" placeholder="Ej. Quito">
                 </div>
 
                 <div class="form-group">
                     <label>Género:</label>
                     <div class="radio-checkbox-group">
-                        <label><input type="radio" name="genero" value="Masculino" required> Masculino</label>
+                        <label><input type="radio" name="genero" value="Masculino"> Masculino</label>
                         <label><input type="radio" name="genero" value="Femenino"> Femenino</label>
                         <label><input type="radio" name="genero" value="Otro"> Otro</label>
                     </div>
@@ -297,9 +334,11 @@
                     <input type="tel" id="campoValidacion" placeholder="Ej. 0999999999">
                 </div>
 
+                <p id="mensajeFormulario" style="font-weight: bold; text-align: center; margin-top: 10px;"></p>
+
                 <div style="display: flex; gap: 10px; margin-top: 20px;">
                     <button type="submit" class="btn" style="flex: 1; background-color: #2563eb;">Enviar Formulario</button>
-                    <button type="button" class="btn" style="flex: 1; background-color: #059669;" onclick="validarCampo()">Validar Celular</button>
+                    <button type="button" id="btnValidarCelular" class="btn" style="flex: 1; background-color: #059669;">Validar Celular</button>
                 </div>
             </form>
         </section>
@@ -308,7 +347,7 @@
 
         <section class="section-center" style="background: var(--bg-card); padding: 20px; border-radius: 12px;">
             <h3>¿Te gustaría solicitar una Demo Gratis?</h3>
-            <button class="btn" style="background-color: #dc2626;" onclick="sumarClick()">Registrar Clic de Interés</button>
+            <button class="btn" id="btnSumarClick" style="background-color: #dc2626;">Registrar Clic de Interés</button>
             <p style="font-size: 18px; margin-top: 15px;">Clics de interés acumulados: <span id="contador" style="font-weight: bold; color: #dc2626; font-size: 24px;">0</span></p>
         </section>
 
@@ -318,7 +357,7 @@
             <h3 style="color: var(--accent-color); margin-top: 0;"><i class="fa-solid fa-calculator"></i> Cotizador Express - Planes IPTV</h3>
             <p>Elige el tiempo de suscripción para ver tu descuento automático:</p>
             
-            <select id="mesesPlan" onchange="calcularPresupuesto()">
+            <select id="mesesPlan">
                 <option value="0">-- Selecciona un plan --</option>
                 <option value="1">1 Mes - Plan Básico</option>
                 <option value="3">3 Meses - Plan Trimestral</option>
@@ -340,7 +379,7 @@
         <hr>
 
         <footer class="section-center" style="padding: 20px 0; color: #64748b;">
-            <h3>Desarrollado por: César A. Oña L. //Cel.: 0961057798 // Email: cesaralexisoi@live.com</h3>
+            <h3>Desarrollado por: César A. Oña L.</h3>
         </footer>
     </div>
 
