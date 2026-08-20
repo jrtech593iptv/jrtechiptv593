@@ -557,3 +557,78 @@ nav a:hover {
         display: flex;
     }
 }
+
+/* ==========================================
+   Estilos de la Sección Preguntas Frecuentes (FAQ)
+   ========================================== */
+
+#faq {
+    display: grid;
+    gap: 20px;
+    padding: 30px 20px;
+}
+
+/* Distribución en Grid para las preguntas */
+#faq article {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 10px var(--card-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Efecto Hover interactivo */
+#faq article:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px var(--card-shadow);
+    border-color: var(--accent-color);
+}
+
+/* Tipografía de Encabezados */
+#faq article h3 {
+    color: var(--accent-color);
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Indicador visual tipo bullet antes del título */
+#faq article h3::before {
+    content: "❓";
+    font-size: 16px;
+}
+
+/* Tipografía de Respuestas */
+#faq article p {
+    color: var(--text-primary);
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+/* Ajustes Responsivos */
+@media (min-width: 768px) {
+    /* En pantallas medianas y grandes se distribuye en cuadrícula de 2 columnas */
+    #faq {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+    
+    /* El encabezado principal abarca el ancho completo */
+    #faq .section-center {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 767px) {
+    #faq article {
+        padding: 18px;
+    }
+    
+    #faq article h3 {
+        font-size: 16px;
+    }
+}
